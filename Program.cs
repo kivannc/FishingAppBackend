@@ -1,5 +1,5 @@
 using System.Text;
-using FishingApp.Models;
+using FishingAppBackend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = true; // Ensure emails are unique
-    options.SignIn.RequireConfirmedEmail = false; // Disable email confirmation requirement
+    options.SignIn.RequireConfirmedEmail = true; // Disable email confirmation requirement
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
