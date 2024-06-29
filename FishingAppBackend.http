@@ -1,0 +1,6 @@
+@FishingAppBackend_HostAddress = http://localhost:5239
+
+GET {{FishingAppBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
