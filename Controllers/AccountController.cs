@@ -1,18 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using FishingApp.Models;
-using FishingApp.Services;
-using System.Threading.Tasks;
-using System;
 using FishingAppBackend.Models;
+using FishingAppBackend.Services;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using FishingAppBackend.Services;
 
-namespace YourApp.Controllers
+namespace FishingAppBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,9 +19,10 @@ namespace YourApp.Controllers
         private readonly IEmailSender _emailSender; // Optional for sending emails
         private readonly JwtSettings _jwtSettings;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IEmailSender emailSender, IOptions<JwtSettings> jwtSettings)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailSender emailSender, IOptions<JwtSettings> jwtSettings)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _emailSender = emailSender;
             _jwtSettings = jwtSettings.Value;
         }

@@ -1,5 +1,6 @@
 using System.Text;
 using FishingAppBackend.Models;
+using FishingAppBackend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,11 +28,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 
-// Configure JWT authentication
-var jwtSection = builder.Configuration.GetSection("Jwt");
-builder.Services.Configure<JwtSettings>(jwtSection);
+var configuration = builder.Configuration;
 
-var jwtSettings = jwtSection.Get<JwtSettings>();
+// Bind JWT settings from secrets
+var jwtSettings = configuration.GetSection("Jwt").Get<JwtSettings>();
+builder.Services.Configure<JwtSettings>(configuration.GetSection("Jwt"));
+
+
+// Bind Email settings from secrets
+var emailSettings = configuration.GetSection("Email").Get<EmailSettings>();
+builder.Services.Configure<EmailSettings>(configuration.GetSection("Email"));
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -57,6 +64,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 

@@ -1,57 +1,60 @@
-using System.Net.Mail;
+using FishingAppBackend.Models;
+using Microsoft.Extensions.Options;
 using System.Net;
+using System.Net.Mail;
 
-namespace FishingAppBackend.Services;
-
-public class EmailSender : IEmailSender
+namespace FishingAppBackend.Services
 {
-    private readonly IConfiguration _configuration;
-
-    public EmailSender(IConfiguration configuration)
+    public class EmailSender : IEmailSender
     {
-        _configuration = configuration;
-    }
+        private readonly EmailSettings _emailSettings;
 
-    public async Task SendPasswordResetEmailAsync(string email, string token)
-    {
-        var smtpClient = new SmtpClient(_configuration["Email:Host"])
+        public EmailSender(IOptions<EmailSettings> emailSettings)
         {
-            Port = int.Parse(_configuration["Email:Port"]),
-            Credentials = new NetworkCredential(_configuration["Email:Username"], _configuration["Email:Password"]),
-            EnableSsl = true,
-        };
+            _emailSettings = emailSettings.Value;
+        }
 
-        var mailMessage = new MailMessage
+        public async Task SendEmailConfirmationAsync(string email, string confirmUrl)
         {
-            From = new MailAddress(_configuration["Email:FromAddress"]),
-            Subject = "Password Reset",
-            Body = $"Please reset your password using the following token: {token}",
-            IsBodyHtml = true,
-        };
-        mailMessage.To.Add(email);
+            var smtpClient = new SmtpClient(_emailSettings.Host)
+            {
+                Port = _emailSettings.Port,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+                EnableSsl = true,
+            };
 
-        await smtpClient.SendMailAsync(mailMessage);
-    }
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(_emailSettings.FromAddress),
+                Subject = "Confirm your email",
+                Body = $"Please confirm your account by clicking this link: <a href='{confirmUrl}'>Confirm Email</a>",
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(email);
 
-    public async Task SendEmailConfirmationAsync(string email, string confirmUrl)
-    {
-        var smtpClient = new SmtpClient(_configuration["Email:Host"])
+            await smtpClient.SendMailAsync(mailMessage);
+        }
+
+        public async Task SendPasswordResetEmailAsync(string email, string resetUrl)
         {
-            Port = int.Parse(_configuration["Email:Port"]),
-            Credentials = new NetworkCredential(_configuration["Email:Username"], _configuration["Email:Password"]),
-            EnableSsl = true,
-        };
+            var smtpClient = new SmtpClient(_emailSettings.Host)
+            {
+                Port = _emailSettings.Port,
+                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+                EnableSsl = true,
+            };
 
-        var mailMessage = new MailMessage
-        {
-            From = new MailAddress(_configuration["Email:FromAddress"]),
-            Subject = "Confirm your email",
-            Body = $"Please confirm your account by clicking this link: <a href='{confirmUrl}'>Confirm Email</a>",
-            IsBodyHtml = true,
-        };
-        mailMessage.To.Add(email);
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(_emailSettings.FromAddress),
+                Subject = "Password Reset",
+                Body = $"Please reset your password using the following link: <a href='{resetUrl}'>Reset Password</a>",
+                IsBodyHtml = true,
+            };
+            mailMessage.To.Add(email);
 
-        await smtpClient.SendMailAsync(mailMessage);
+            await smtpClient.SendMailAsync(mailMessage);
+        }
     }
 }
-
