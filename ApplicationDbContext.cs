@@ -1,3 +1,4 @@
+using FishingAppBackend.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,4 +10,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     }
 
     // DbSets for other entities will go here in the future
+    public DbSet<FishingSpot> FishingSpots { get; set; }
 }
