@@ -1,5 +1,5 @@
 
-namespace FishingAppBackend.Models;
+namespace FishingAppAPI.Models;
 
 public class JwtSettings
 {

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using FishingAppBackend.Models;
-using FishingAppBackend.Services;
+using FishingAppAPI.Models;
+using FishingAppAPI.Services;
 
-namespace FishingAppBackend.Controllers;
+namespace FishingAppAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

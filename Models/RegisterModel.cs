@@ -1,4 +1,4 @@
-namespace FishingAppBackend.Models;
+namespace FishingAppAPI.Models;
 public class RegisterModel
 {
     public string UserName { get; set; }

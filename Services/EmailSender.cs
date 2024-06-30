@@ -1,9 +1,9 @@
-using FishingAppBackend.Models;
+using FishingAppAPI.Models;
 using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
 
-namespace FishingAppBackend.Services
+namespace FishingAppAPI.Services
 {
     public class EmailSender : IEmailSender
     {

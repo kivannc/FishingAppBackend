@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FishingAppBackend.Migrations
+namespace FishingAppAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240629105702_InitialCreate")]

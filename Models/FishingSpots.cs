@@ -1,5 +1,5 @@
 
-namespace FishingAppBackend.Models;
+namespace FishingAppAPI.Models;
 public class FishingSpot
 {
     public int Id { get; set; }

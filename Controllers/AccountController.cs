@@ -1,14 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using FishingAppBackend.Models;
-using FishingAppBackend.Services;
+using FishingAppAPI.Models;
+using FishingAppAPI.Services;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace FishingAppBackend.Controllers
+namespace FishingAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

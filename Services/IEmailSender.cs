@@ -1,4 +1,4 @@
-namespace FishingAppBackend.Services;
+namespace FishingAppAPI.Services;
 
 public interface IEmailSender
 {

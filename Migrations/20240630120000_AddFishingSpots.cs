@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace FishingAppBackend.Migrations
+namespace FishingAppAPI.Migrations
 {
     /// <inheritdoc />
     public partial class AddFishingSpots : Migration
