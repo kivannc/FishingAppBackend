@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using FishingAppBackend.Models;
-using System.Threading.Tasks;
 using FishingAppBackend.Services;
 
 namespace FishingAppBackend.Controllers;
